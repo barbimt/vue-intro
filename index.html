@@ -11,14 +11,37 @@
     <div id="app"></div>
     <script>
       const app = Vue.createApp({
-        template: ``
-        
+        template: `
+        <div> 
+          <v-layout> 
+            <template v-slot:header> 
+              <button>Title</button>  
+            </template> 
+            <template v-slot:content>
+              <p>
+              Lorem ispum dolor sit amet. 
+              </p>
+            </template>
+          </v-layout>
+          
+          </div>
+        `,
+      });
+
+      //podemos renombrar el slot -> y arriba le indicamos a q slot pertenece
+      app.component("v-layout", {
+        template: `
+        <header> 
+          <slot name="header"></slot>
+        </header>
+        <div>
+          <slot name="content"></slot>
+        </div>
+        `,
       });
 
       const vm = app.mount("#app");
     </script>
-    <style>
-   
-    </style>
+    <style></style>
   </body>
 </html>
