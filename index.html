@@ -11,14 +11,46 @@
     <div id="app"></div>
     <script>
       const app = Vue.createApp({
-        template: ``
-        
+        data() {
+          return {
+            items: ["uno", "dos", "tres"],
+          };
+        },
+        methods: {
+          remove(i) {
+            const items = (this.items = this.items.filter(
+              (el, index) => index !== i
+            ));
+            this.items = items;
+          },
+        },
+        template: `
+        <ul>
+          <v-item 
+            v-for="(item, i) in items" 
+            v-bind:text="item"
+            v-on:remove="remove(i)"
+          />
+        </ul>
+        `,
       });
 
+      app.component("v-item", {
+        props: {
+          text: String,
+        },
+        methods: {
+          removeFromComponent() {
+            //con emit voy a poder nombrar como primer argumento el nombre del evento q quiero emitir y puedo agregar un segundo argumento q puede contener el valor q quiero transmitir, en este caso solo quiero el evento. va a ejecutar el remove de arriba
+            this.$emit("remove");
+          },
+        },
+        template: `<li v-on:click="removeFromComponent">
+          {{text}}
+          </li>`,
+      });
       const vm = app.mount("#app");
     </script>
-    <style>
-   
-    </style>
+    <style></style>
   </body>
 </html>
