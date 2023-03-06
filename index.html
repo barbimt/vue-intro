@@ -11,14 +11,42 @@
     <div id="app"></div>
     <script>
       const app = Vue.createApp({
-        template: ``
-        
+        data() {
+          return {
+            text: "hola vue desde el padre",
+          };
+        },
+        provide() {
+         return{
+            otroText: this.text
+         }
+        },
+        template: `
+          <div> {{text}} </div>
+          <hijo />
+        `,
+      });
+
+      app.component("hijo", {
+        template: `
+          <nieto />
+        `,
+      });
+
+      app.component("nieto", {
+        // inject: ["otroText"],
+        inject: {
+          textNew: {
+            from: "otroText"
+          }
+        },
+        template: `
+          <div>{{textNew}} </div>
+        `,
       });
 
       const vm = app.mount("#app");
     </script>
-    <style>
-   
-    </style>
+    <style></style>
   </body>
 </html>
