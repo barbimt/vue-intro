@@ -11,14 +11,26 @@
     <div id="app"></div>
     <script>
       const app = Vue.createApp({
-        template: ``
-        
+        data() {
+          return {
+            text: "hola vue",
+          };
+        },
+        template: `
+          <v-button ref="elemento" :label="text"> </v-button>
+        `,
       });
 
+      app.component("v-button", {
+        props: ["label"],
+        template: `<button> {{label}}</button>`
+      })
+
       const vm = app.mount("#app");
+      console.log(vm.$props);
+      console.log(vm.$root);
+      console.log(vm.$refs);
     </script>
-    <style>
-   
-    </style>
+    <style></style>
   </body>
 </html>
